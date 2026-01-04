@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <!-- Мета-тег для корректного отображения на мобильных устройствах -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Studio Portfolio</title>
+    <style>
+        /* =========================================
+           1. БАЗОВЫЕ НАСТРОЙКИ (RESET CSS)
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Учитывать отступы в ширине блоков */
+        }
+
+        body {
+            /* БЕЛЫЙ ФОН, как вы просили */
+            background-color: #ffffff; 
+            font-family: 'Arial', sans-serif;
+            color: #333; /* Темно-серый текст для контраста */
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* =========================================
+           2. ШАПКА (HEADER) И НАВИГАЦИЯ
+           ========================================= */
+        header {
+            position: fixed; /* Фиксируем шапку сверху */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #fff; /* Белая шапка */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* Легкая тень */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%; /* Отступы по бокам */
+            z-index: 1000; /* Поверх всего контента */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        /* Контейнер меню (ссылки + соцсети) */
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Расстояние между элементами */
+        }
+
+        /* Стили для кнопок соцсетей */
+        .social-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            transition: opacity 0.3s;
+        }
+        .social-btn:hover { opacity: 0.8; }
+
+        /* Цвета для разных соцсетей */
+        .tiktok { background-color: #000; }
+        .tg { background-color: #0088cc; }
+        .vk { background-color: #0077FF; }
+        .rutube { background-color: #004d99; }
+        .video { background-color: #ff0000; }
+        .yandex { background-color: #FC3F1D; } 
+
+        /* =========================================
+           3. БУРГЕР-МЕНЮ (Изначально скрыто)
+           ========================================= */
+        .hamburger {
+            display: none; /* На ПК не показываем */
+            cursor: pointer;
+        }
+        
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: #333;
+        }
+
+        /* =========================================
+           4. ОСНОВНОЙ КОНТЕНТ (СЕТКА 8 КАРТИНОК)
+           ========================================= */
+        main {
+            padding: 100px 5% 50px; /* Отступ сверху 100px, чтобы не перекрывала шапка */
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* МОДУЛЬНАЯ СЕТКА (GRID) */
+        .gallery-grid {
+            display: grid;
+            /* 
+               repeat(auto-fit, minmax(250px, 1fr)) - магическая формула адаптивности.
+
+
+               Она создает столько колонок, сколько поместится.
+               Минимальная ширина картинки 250px, максимальная - 1 доля (растягивается).
+            */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; /* Расстояние между модулями */
+        }
+
+        .game-card {
+            background: #f4f4f4;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        /* Эффект наведения на карточку */
+        .game-card:hover {
+            transform: translateY(-5px); /* Приподнимаем карточку */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .game-img {
+            width: 100%;
+            height: 250px; /* Фиксированная высота */
+            object-fit: cover; /* Картинка заполняет блок, обрезаясь по краям, но не искажаясь */
+            display: block;
+        }
+
+        .card-title {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* =========================================
+           5. АДАПТИВНОСТЬ (MEDIA QUERIES)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Показываем бургер на мобильных */
+            .hamburger {
+                display: block;
+            }
+
+            /* Превращаем полоски в крестик при активации */
+            .hamburger.active .bar:nth-child(2) { opacity: 0; }
+            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            /* Меню выезжает сверху или сбоку */
+            .nav-menu {
+                position: fixed;
+                left: -100%; /* Скрыто за левым краем */
+                top: 70px; /* Сразу под шапкой */
+                flex-direction: column; /* Вертикальный список */
+                background-color: #fff;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 20px 0;
+                box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+            }
+
+            /* Класс, который добавляет JS для открытия меню */
+            .nav-menu.active {
+                left: 0;
+            }
+
+            /* Кнопки соцсетей на мобильном делаем шире */
+            .social-btn {
+                display: block;
+                width: 80%;
+                margin: 5px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <header>
+        <a href="#" class="logo">Game Studio</a>
+
+        <!-- Меню навигации (Соцсети) -->
+        <nav>
+            <ul class="nav-menu">
+                <!-- Ссылки на соцсети -->
+                <li><a href="https://tiktok.com" class="social-btn tiktok" target="_blank">TikTok</a></li>
+                <li><a href="https://t.me" class="social-btn tg" target="_blank">Telegram</a></li>
+                <li><a href="https://vk.com" class="social-btn vk" target="_blank">VK</a></li>
+                <li><a href="https://rutube.ru" class="social-btn rutube" target="_blank">Rutube</a></li>
+                <li><a href="#" class="social-btn video" target="_blank">Video</a></li>
+                <li><a href="https://yandex.ru/games/" class="social-btn yandex" target="_blank">Yandex Games</a></li>
+ </ul>
+        </nav>
+
+        <!-- Кнопка Бургера -->
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ БЛОК: СЕТКА ИЗ 8 ИЗОБРАЖЕНИЙ -->
+    <main>
+        <h1>Наши Игровые Проекты</h1>
+        
+        <div class="gallery-grid">
+            
+            <!-- Карточка 1 -->
+            <div class="game-card">
+                <!-- Замените src на путь к вашей картинке -->
+                <img src="img/Game1.jpg"  alt="Game 1" class="game-img">
+                <div class="card-title">Cyber RPG</div>
+            </div>
+
+            <!-- Карточка 2 -->
+
+
+            <div class="game-card">
+                <img src="img/Game2.jpg"" alt="Game 2" class="game-img">
+                <div class="card-title">Space Shooter</div>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="game-card">
+                <img src="img/Game3.jpg"" alt="Game 3" class="game-img">
+                <div class="card-title">Fantasy World</div>
+            </div>
+
+            <!-- Карточка 4 -->
+            <div class="game-card">
+                <img src="img/Game4.jpg"" alt="Game 4" class="game-img">
+                <div class="card-title">Racing Sim</div>
+            </div>
+
+            <!-- Карточка 5 -->
+            <div class="game-card">
+                <img src="img/Game5.jpg"" alt="Game 5" class="game-img">
+                <div class="card-title">Horror House</div>
+            </div>
+
+            <!-- Карточка 6 -->
+            <div class="game-card">
+                <img src="img/Game6.jpg"" alt="Game 6" class="game-img">
+                <div class="card-title">Puzzle Quest</div>
+            </div>
+
+            <!-- Карточка 7 -->
+            <div class="game-card">
+                <img src="img/Game7.jpg"" alt="Game 7" class="game-img">
+                <div class="card-title">Battle Royale</div>
+            </div>
+
+            <!-- Карточка 8 -->
+            <div class="game-card">
+                <img src="img/Game8.jpg"" alt="Game 8" class="game-img">
+                <div class="card-title">Strategy War</div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- СКРИПТ (JAVASCRIPT) -->
+    <script>
+        // Получаем элементы из HTML
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        // Добавляем событие "клик" на бургер
+        hamburger.addEventListener("click", () => {
+            // Переключаем класс 'active' для бургера (превращается в крестик)
+            hamburger.classList.toggle("active");
+            // Переключаем класс 'active' для меню (выезжает/уезжает)
+            navMenu.classList.toggle("active");
+        });
+
+        // Закрывать меню, если нажали на одну из ссылок (удобно для телефонов)
+        document.querySelectorAll(".social-btn").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        }));
+    </script>
+</body>
+</html>
+
+
+
+
